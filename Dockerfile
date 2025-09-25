@@ -3,13 +3,15 @@ FROM jrottenberg/ffmpeg:4-alpine
 WORKDIR /app
 
 # Install dependencies
-RUN apk add --no-cache python3 py3-pip
+RUN apk add --no-cache python3 py3-pip && \
+    pip3 install flask
 
-# Copy all files (including server.py)
-COPY . .
+# Copy application files
+COPY server.py .
 
-# Install Flask
-RUN pip3 install flask
+# Expose Flask port
+EXPOSE 5000
 
-# Run the server
-CMD ["python3", "server.py"]
+# Override FFmpeg entrypoint to run Python
+ENTRYPOINT ["python3"]
+CMD ["server.py"]

@@ -1,11 +1,13 @@
-# Use the official FFmpeg image as a base
-FROM jrottenberg/ffmpeg:latest
+# Use a Debian-based FFmpeg image with shell utilities
+FROM jrottenberg/ffmpeg:4.4-alpine
+# Or use ubuntu-based image for more tools:
+# FROM jrottenberg/ffmpeg:4.4
 
-# Set the working directory inside the container
+# Set the working directory
 WORKDIR /app
 
-# Copy your scripts or files into the container
+# Copy your files (if any)
 COPY . .
 
-# Keep the container running (optional, for debugging)
-CMD ["tail", "-f", "/dev/null"]
+# Keep the container running (use sh -c to ensure shell is available)
+CMD ["sh", "-c", "tail -f /dev/null"]
